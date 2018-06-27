@@ -15,7 +15,7 @@ module.exports = app => {
     }, {});
 
     if (!filters) {
-      res.send({ error: "Va te faire enculer" });
+      res.send({ error: "Vas te faire enculer" });
       return;
     }
 
