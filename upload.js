@@ -1,32 +1,31 @@
-var csv = require('fast-csv');
-var mongoose = require('mongoose');
-var Author = require('./models/place.model.js');
+var csv = require("fast-csv");
+var mongoose = require("mongoose");
+var Author = require("./models/place.model.js");
 
-exports.post = function (req, res) {
-    if (!req.files)
-        return res.status(400).send('No files were uploaded.');
+exports.post = function(req, res) {
+  if (!req.files) return res.status(400).send("No files were uploaded.");
 
-    var authorFile = req.files.file;
+  var authorFile = req.files.file;
 
-    var authors = [];
+  var authors = [];
 
-    csv
-        .fromString(authorFile.data.toString(), {
-            headers: true,
-            ignoreEmpty: true,
-        })
-        .on("data", function(data){
-            data['_id'] = new mongoose.Types.ObjectId();
-
-            authors.push(data);
-        })
-        .on("end", function(){
-            Author.create(authors, function(err, documents) {
-                if (err) throw err;
-            });
-
-            res.send(authors.length + ' place have been successfully uploaded.');
-        }).on("error", function(data){
-        return false;
+  csv
+    .fromString(authorFile.data.toString(), {
+      headers: true,
+      ignoreEmpty: true,
+      delimiter: ";"
     })
+    .on("data", function(data) {
+      data["_id"] = new mongoose.Types.ObjectId();
+      //   console.log(data["_id"]);
+      Author.create(data, function(err, documents) {
+        if (err) throw err;
+      });
+    })
+    .on("end", function() {
+      res.send(authors.length + " place have been successfully uploaded.");
+    })
+    .on("error", function(data) {
+      return false;
+    });
 };

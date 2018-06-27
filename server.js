@@ -1,22 +1,35 @@
-const express = require('express');
-const app = express()
-const mongoose = require('mongoose');
-var fileUpload = require('express-fileupload');
+const express = require("express");
+const app = express();
+const mongoose = require("mongoose");
+var fileUpload = require("express-fileupload");
 
-mongoose.connect('mongodb://54.37.158.186:30001/test');
+const routes = require("./routes");
+
+mongoose.connect("mongodb://54.37.158.186:30001/test");
 
 app.use(fileUpload());
 
-app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/templates/index.html');
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
 });
 
-app.listen(3000, function () {
-    console.log('Example app listening on port 3000!')
+app.get("/", function(req, res) {
+  res.sendFile(__dirname + "/templates/index.html");
 });
 
-const template = require('./template.js');
-app.get('/template', template.get);
+app.listen(3000, function() {
+  console.log("Example app listening on port 3000!");
+});
 
-var upload = require('./upload.js');
-app.post('/', upload.post);
+const template = require("./template.js");
+app.get("/template", template.get);
+
+var upload = require("./upload.js");
+app.post("/", upload.post);
+
+routes(app);
