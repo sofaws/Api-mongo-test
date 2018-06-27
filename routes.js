@@ -14,6 +14,11 @@ module.exports = app => {
       }
     }, {});
 
+    if (!filters) {
+      res.send({ error: "Va te faire enculer" });
+      return;
+    }
+
     Places.find(filters).then(data => {
       res.send(data);
     });
