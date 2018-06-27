@@ -12,12 +12,16 @@ module.exports = app => {
       if (key[1]) {
         return { ...acc, [key[0]]: key[1] };
       }
+
+      return acc;
     }, {});
 
     if (!filters) {
       res.send({ error: "Vas te faire enculer" });
       return;
     }
+
+    console.log(filters);
 
     Places.find(filters).then(data => {
       res.send(data);
