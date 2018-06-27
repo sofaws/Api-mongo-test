@@ -1,5 +1,21 @@
 var Places = require("./models/place.model.js");
 
+const selector = {
+  EquGpsX: 1,
+  EquGpsY: 1,
+  Activité: 1,
+  Niveau: 1,
+  EquAccesHandimAire: 1,
+  EquNom: 1,
+  "Type d'équipement": 1,
+  InsNom: 1,
+  InsNoVoie: 1,
+  InsLibelleVoie: 1,
+  InsArrondissement: 1,
+  EquSurfaceEvolution: 1,
+  ComLib: 1
+};
+
 module.exports = app => {
   app.get("/api/gymnasium", (req, res) => {
     const { level, activity, department, city } = req.query;
@@ -23,9 +39,11 @@ module.exports = app => {
 
     console.log(filters);
 
-    Places.find(filters).then(data => {
-      res.send(data);
-    });
+    Places.find(filters)
+      .select(selector)
+      .then(data => {
+        res.send(data);
+      });
   });
 
   app.post("/api/gymnasium", (req, res) => {
