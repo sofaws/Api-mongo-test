@@ -37,8 +37,6 @@ module.exports = app => {
       return;
     }
 
-    console.log(filters);
-
     Places.find(filters)
       .select(selector)
       .then(data => {
@@ -50,6 +48,17 @@ module.exports = app => {
     Places.create(req.body)
       .then(data => {
         res.send(data);
+      })
+      .catch(e => {
+        res.send(e);
+      });
+  });
+
+  app.delete("/api/gymnasium", (req, res) => {
+    const { id: _id } = req.query;
+    Places.deleteOne({ _id })
+      .then(() => {
+        res.send({ sttuts: 200, message: `Tu as effacé ${_id}` });
       })
       .catch(e => {
         res.send(e);
