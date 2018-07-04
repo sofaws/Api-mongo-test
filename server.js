@@ -6,7 +6,7 @@ const app = express();
 
 const routes = require("./routes");
 
-mongoose.connect("mongodb://54.37.158.186:30001/test");
+mongoose.connect("mongodb://54.37.158.186:27017/testDb");
 
 app.use(bodyParser.json());
 app.use(fileUpload());
