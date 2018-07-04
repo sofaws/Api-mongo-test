@@ -1,12 +1,14 @@
 const express = require("express");
-const app = express();
+const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 var fileUpload = require("express-fileupload");
+const app = express();
 
 const routes = require("./routes");
 
 mongoose.connect("mongodb://54.37.158.186:30001/test");
 
+app.use(bodyParser.json());
 app.use(fileUpload());
 
 app.use(function(req, res, next) {

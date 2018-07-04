@@ -49,7 +49,7 @@ module.exports = app => {
   app.post("/api/gymnasium", (req, res) => {
     Places.create(req.body)
       .then(data => {
-        res.send(200);
+        res.send(data);
       })
       .catch(e => {
         res.send(e);

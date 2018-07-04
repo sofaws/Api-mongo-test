@@ -1,6 +1,6 @@
 var csv = require("fast-csv");
 var mongoose = require("mongoose");
-var Author = require("./models/place.model.js");
+var Place = require("./models/place.model.js");
 
 exports.post = function(req, res) {
   if (!req.files) return res.status(400).send("No files were uploaded.");
@@ -17,8 +17,7 @@ exports.post = function(req, res) {
     })
     .on("data", function(data) {
       data["_id"] = new mongoose.Types.ObjectId();
-      //   console.log(data["_id"]);
-      Author.create(data, function(err, documents) {
+      Place.create(data, function(err, documents) {
         if (err) throw err;
       });
     })
